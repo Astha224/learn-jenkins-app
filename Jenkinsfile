@@ -20,6 +20,15 @@ pipeline {
                 '''
             }
         }
+        stage ('test'){
+            agent any
+
+            steps{
+                sh '''
+                    echo "test stage"
+                '''
+            }
+        }
     }
 }
 
