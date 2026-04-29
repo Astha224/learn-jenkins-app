@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment{
+        NETIFY_SITE_ID ='04258ee5-9325-4437-ae7f-73b791d50602'
+    }
+
     stages {
 
         stage('Build') {
@@ -68,6 +72,21 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
+
+        stage('Deploy') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh '''
+                    nnpm install netlify-cli@20.1.1
+                    node_modules/.bin/netlify --version
+                '''
             }
         }
     }
